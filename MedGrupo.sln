@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{3EB69E1F-A0C
 		SQL\MEDGRUPO.sql = SQL\MEDGRUPO.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEMGRUPOTest", "DEMGRUPOTest\DEMGRUPOTest.csproj", "{D0A43976-1AB3-41C3-B3BD-A9F5439C5ED7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{366CF088-9AB5-43F8-B637-E4A4CD1EE267}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{366CF088-9AB5-43F8-B637-E4A4CD1EE267}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{366CF088-9AB5-43F8-B637-E4A4CD1EE267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A43976-1AB3-41C3-B3BD-A9F5439C5ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A43976-1AB3-41C3-B3BD-A9F5439C5ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A43976-1AB3-41C3-B3BD-A9F5439C5ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A43976-1AB3-41C3-B3BD-A9F5439C5ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,5 +12,6 @@ namespace Apl.ERP.API.Repositories
         protected readonly bool closeConnection = true;
 
         public RepositoryGeral(ConnectionString connection) => this.connection = connection;
+        public RepositoryGeral(SqlConnection cnn) => this.cnn = cnn;
     }
 }

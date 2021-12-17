@@ -4,7 +4,7 @@ namespace Apl.ERP.API.Models
 {
     public class Contato : ModelGeral
     {
-        public string ContatoID { get; set; }
+        public int ContatoID { get; set; }
         public string Nome { get; set; }
         public DateTime Nascimento { get; set; }
         public string Sexo { get; set; }

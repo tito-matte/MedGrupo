@@ -14,6 +14,7 @@ namespace Apl.ERP.API.Repositories
     public class ContatoRepository : RepositoryGeral, IContatoRepository
     {
         public ContatoRepository(ConnectionString connection) : base(connection) => cnn = new SqlConnection(connection.MED);
+        public ContatoRepository(SqlConnection cnn) : base(cnn) { }
 
         #region ..: Métodos públicos :..
 
@@ -28,23 +29,19 @@ values
 
 select IDENT_CURRENT( 'dbo.tbContatos' )
 ";
-            int contatoID = 0;
 
             try
             {
                 if (contato.Idade < 21)
                     throw new Exception("Contato menor de edade.");
 
-                using (SqlConnection cnn = new SqlConnection(connection.MED))
-                {
-                    cnn.Open();
+                AbrirConnection();
 
-                    contatoID = cnn.ExecuteScalar<int>(sql, new { contato.Nome, contato.Nascimento, contato.Sexo, contato.Status });
+                contato.ContatoID = cnn.ExecuteScalar<int>(sql, new { contato.Nome, contato.Nascimento, contato.Sexo, contato.Status });
 
-                    cnn.Close();
-                }
+                cnn.Close();
 
-                return await Task.FromResult(contatoID);
+                return await Task.FromResult(contato.ContatoID);
             }
             catch (Exception)
             {
@@ -59,14 +56,11 @@ select IDENT_CURRENT( 'dbo.tbContatos' )
 
             List<Contato> empresas = new();
 
-            using (SqlConnection cnn = new(connection.MED))
-            {
-                cnn.Open();
+            AbrirConnection();
 
-                empresas = cnn.Query<Contato>(sql).ToList();
+            empresas = cnn.Query<Contato>(sql).ToList();
 
-                cnn.Close();
-            }
+            cnn.Close();
 
             return await Task.FromResult(empresas);
         }
@@ -78,17 +72,12 @@ select IDENT_CURRENT( 'dbo.tbContatos' )
 
             Contato contato = null;
 
-            using (SqlConnection cnn = new SqlConnection(connection.MED))
-            {
+            AbrirConnection();
 
+            contato = cnn.Query<Contato>(sql, new { contatoID }).FirstOrDefault();
 
-                cnn.Open();
+            cnn.Close();
 
-                contato = cnn.Query<Contato>(sql, new { contatoID }).FirstOrDefault();
-
-                cnn.Close();
-
-            }
             return await Task.FromResult(contato);
         }
 
@@ -101,16 +90,13 @@ where ContatoID = @contatoID";
 
             try
             {
-                using (SqlConnection cnn = new SqlConnection(connection.MED))
-                {
-                    cnn.Open();
+                AbrirConnection();
 
-                    cnn.ExecuteScalar(sql, new { contatoID });
+                cnn.ExecuteScalar(sql, new { contatoID });
 
-                    cnn.Close();
+                cnn.Close();
 
-                    return await Task.FromResult(true);
-                }
+                return await Task.FromResult(true);
             }
             catch (Exception)
             {
@@ -127,22 +113,27 @@ where ContatoID = @contatoID";
 
             try
             {
-                using (SqlConnection cnn = new SqlConnection(connection.MED))
-                {
-                    cnn.Open();
+                AbrirConnection();
 
-                    cnn.ExecuteScalar(sql, new { contatoID });
+                cnn.ExecuteScalar(sql, new { contatoID });
 
-                    cnn.Close();
+                cnn.Close();
 
-                    return await Task.FromResult(true);
-                }
+                return await Task.FromResult(true);
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+        #endregion
+
+        #region ..: Metodos privádos :..
+        private void AbrirConnection()
+        {
+            if (cnn.State != System.Data.ConnectionState.Open)
+                cnn.Open();
         }
         #endregion
     }
